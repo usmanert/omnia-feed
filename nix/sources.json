@@ -59,19 +59,19 @@
         "url": "https://github.com/NixOS/nixpkgs/archive/ee084c02040e864eeeb4cf4f8538d92f7c675671.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
-    "nixpkgs2": {
+ "nixpkgs2": {
         "branch": "nixpkgs-unstable",
         "description": "Nix Packages collection",
         "homepage": "",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3a86856a13c88c8c64ea32082a851fefc79aa700",
+        "rev": "4d2b37a84fad1091b9de401eb450aae66f1a741e",
         "sha256": "04dd4g24061p8sw922zjickahqwn3wa9l3j5qllfzp5n6dy9is16",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/3a86856a13c88c8c64ea32082a851fefc79aa700.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs/archive/refs/tags/22.11.zip",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
- "omnia": {
+"omnia": {
         "branch": "master",
         "description": null,
         "homepage": "",
@@ -82,29 +82,29 @@
         "type": "git",
         "url": "https://github.com/gsu-protocol/omnia.git",
         "url_template": "<repo>"
-    },     
-    "oracle-suite": {
+    },
+"oracle-suite": {
         "branch": "master",
         "description": null,
         "homepage": "",
-        "owner": "usmanert",
-        "repo": "https://github.com/usmanert/oracle-suite.git",
-        "rev": "3b2e46bb192ad9a9673cf0030d9134c9c78094dd",
-        "sha256": "3b2e46bb192ad9a9673cf0030d9134c9c78094dd",
+        "owner": "block360",
+        "repo": "https://github.com/block360/oracle-suite-1.git",
+        "rev": "0c9787193ade2ad5a42434a4960b97ee3679e6e1",
+        "sha256": "2f8b15783d664bf7f52d0c17029a2c6fe3a62ad3",
         "type": "git",
-        "url": "https://github.com/usmanert/oracle-suite.git",
+        "url": "https://github.com/block360/oracle-suite-1.git",
         "url_template": "<repo>"
-    },     
+    },
     "setzer": {
         "branch": "master",
         "description": null,
         "homepage": "",
-        "owner": "usmanert",
-        "repo": "https://github.com/usmanert/setzer.git",
-        "rev": "fa447e18fffe6316315efc2f570cdd83baeff0bb",
+        "owner": "block360",
+        "repo": "https://github.com/block360/setzer-2.git",
+        "rev": "e0b9a586006fb40caba286b654f23ef906fa50d4",
         "sha256": "",
         "type": "git",
-        "url": "https://github.com/usmanert/setzer.git",
+        "url": "https://github.com/block360/setzer-2.git",
         "url_template": "<repo>"
     }
 }
