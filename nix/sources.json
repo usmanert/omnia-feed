@@ -87,12 +87,12 @@
         "branch": "master",
         "description": null,
         "homepage": "",
-        "owner": "block360",
-        "repo": "https://github.com/block360/oracle-suite-1.git",
-        "rev": "0c9787193ade2ad5a42434a4960b97ee3679e6e1",
+        "owner": "gsu-protocol",
+        "repo": "https://github.com/gsu-protocol/oracle-suite.git",
+        "rev": "dd5c87025a11c0611372cedbeb4fe2d5bb0a245c",
         "sha256": "2f8b15783d664bf7f52d0c17029a2c6fe3a62ad3",
         "type": "git",
-        "url": "https://github.com/block360/oracle-suite-1.git",
+        "url": "https://github.com/gsu-protocol/oracle-suite.git",
         "url_template": "<repo>"
     },
     "setzer": {
