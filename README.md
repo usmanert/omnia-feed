@@ -50,11 +50,11 @@ The setup scripts can also be used configure Omnia as a feed running with `syste
 The setup scripts can also be used configure Omnia as a relay running with `systemd` but first make sure spire is running:
 ```
 
-sudo ./setup/run_it_relay.sh --gofer <ABSOLUTE_PATH_OF_CONFIG> --omnia <ABSOLUTE_PATH_OF_CONFIG> --spire <ABSOLUTE_PATH_OF_CONFIG>
+sudo ./setup/run_it_feed.sh --gofer <ABSOLUTE_PATH_OF_CONFIG> --omnia <ABSOLUTE_PATH_OF_CONFIG> --spire <ABSOLUTE_PATH_OF_CONFIG>
 
 for example:
 
-sudo ./setup/run_it_relay.sh --gofer /home/oracles/gofer.json --omnia /home/oracles/omnia_relay.json --spire /home/oracles/spire1.json
+sudo ./setup/run_it_feed.sh --gofer /home/oracles/gofer.json --omnia /home/oracles/omnia_relay.json --spire /home/oracles/spire1.json
 
 ```
 
