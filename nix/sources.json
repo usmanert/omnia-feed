@@ -100,11 +100,11 @@
         "description": null,
         "homepage": "",
         "owner": "block360",
-        "repo": "https://github.com/block360/setzer-2.git",
-        "rev": "e0b9a586006fb40caba286b654f23ef906fa50d4",
+        "repo": "https://github.com/block360/setzer.git",
+        "rev": "935c840c70171e2a3fbfc45fd5640d5002af05bd",
         "sha256": "",
         "type": "git",
-        "url": "https://github.com/block360/setzer-2.git",
+        "url": "https://github.com/block360/setzer.git",
         "url_template": "<repo>"
     }
 }
