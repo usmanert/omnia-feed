@@ -68,9 +68,17 @@ systemctl start gofer-agent.service
 systemctl start spire-agent.service
 ```
 
+### Configuring Gofer
+
+the gofer is configured by its configurations and the sample config is stated below. 
+**It uses HCL file for configuration; HCL File should be same for Gofer and Spire**
+
+
 ### Configuring Spire
 
 >spire is installed through nix.
+
+**It uses HCL file for configuration; HCL File should be same for Gofer and Spire**
 
 This is based on libp2p which is a peer-to-peer networking protocol designed to enable decentralized communication and file sharing over the internet. It is a modular, open-source networking protocol that allows nodes to communicate with each other directly, without the need for a central server or infrastructure.
 
@@ -86,7 +94,7 @@ sudo journalctl -u <spire-agent.service> -n 100 -b -f
 ```hcl 
 "transport" {
       "libp2p"  {
-        "directPeersAddrs"=[]}}
+        "directPeersAddrs"=["Add listen address here"]}}
   ```
 
 ### command to run spire
@@ -190,6 +198,103 @@ Replace <invite_code> with the invite code obtained in the previous step.
       "msgExpiration": 1800,
       "msgSpread": 0.5
     }
+  }
+}
+```
+
+**Example configuration: SPIRE && GOFER**
+```hcl
+variables {
+  # List of feeds that are allowed to send price updates and event attestations.
+  feeds = try(env.CFG_FEEDS == "" ? [] : split(",", env.CFG_FEEDS), [
+      "0x125fC0CcCDee5ac474062F6358d4d056b0430b84",
+      "0x37c273044A6ef7c9D09670C8246c49FF4CfD2511",
+      "0x34050B9d0630594214008e3a2af07107B71831fd"
+  ])
+}
+
+ethereum {
+  rand_keys = try(env.CFG_ETH_FROM, "0x125fC0CcCDee5ac474062F6358d4d056b0430b84") == "" ? ["default"] : []
+
+  dynamic "key" {
+    for_each = try(env.CFG_ETH_FROM, "0x125fC0CcCDee5ac474062F6358d4d056b0430b84") == "" ? [] : [1]
+    labels   = ["default"]
+    content {
+      address         = try(env.CFG_ETH_FROM, "0x125fC0CcCDee5ac474062F6358d4d056b0430b84")
+      keystore_path   = try(env.CFG_ETH_KEYS, "/home/usman/.ethereum/keystore")
+      passphrase_file = try(env.CFG_ETH_PASS, "/home/usman/.ethereum/keystore/.pass")
+    }
+  }
+
+  client "default" {
+    rpc_urls     = try(env.CFG_ETH_RPC_URLS == "" ? [] : split(",", env.CFG_ETH_RPC_URLS), [
+      "https://goerli.infura.io/v3/de82b2d602264e4fbc0929dec0c45baa"
+    ])
+    chain_id     = 1
+    ethereum_key = "default"
+  }
+
+  client "arbitrum" {
+    rpc_urls     = try(env.CFG_ETH_ARB_RPC_URLS == "" ? [] : split(",", env.CFG_ETH_ARB_RPC_URLS), [
+      "https://arbitrum.public-rpc.com"
+    ])
+    chain_id     = 42161
+    ethereum_key = "default"
+  }
+
+  client "optimism" {
+    rpc_urls     = try(env.CFG_ETH_OPT_RPC_URLS == "" ? [] : split(",", env.CFG_ETH_OPT_RPC_URLS), [
+      "https://mainnet.optimism.io"
+    ])
+    chain_id     =  10
+    ethereum_key = "default"
+  }
+}
+
+transport {
+  # LibP2P transport configuration. Always enabled.
+  libp2p {
+    feeds           = var.feeds
+    priv_key_seed   = try(env.CFG_LIBP2P_PK_SEED, "")
+    listen_addrs    = try(split(",", env.CFG_LIBP2P_LISTEN_ADDRS), ["/ip4/0.0.0.0/tcp/8779"])
+    direct_peers_addrs = []
+    blocked_addrs      = try(env.CFG_LIBP2P_BLOCKED_ADDRS == "" ? [] : split(",", env.CFG_LIBP2P_BLOCKED_ADDRS), [])
+    disable_discovery  =  false
+    ethereum_key       = try(env.CFG_ETH_FROM, "0x125fC0CcCDee5ac474062F6358d4d056b0430b84") == "" ? "" : "default"
+  }
+}
+
+spire {
+  rpc_listen_addr = try(env.CFG_SPIRE_RPC_ADDR, "0.0.0.0:9105")
+  rpc_agent_addr  = try(env.CFG_SPIRE_RPC_ADDR, "127.0.0.1:9105")
+
+  # List of pairs that are collected by the spire node. Other pairs are ignored.
+  pairs = try(env.CFG_SPIRE_PAIRS == "" ? [] : split(",", env.CFG_SPIRE_PAIRS), [
+    "BTC/USD",
+    "USDT/GSU"
+  ])
+}
+
+gofer {
+  rpc_listen_addr = "0.0.0.0:9200"
+  rpc_agent_addr  = "0.0.0.0:9200"
+  price_model "ETH/GSU" "median" {
+      source "ETH/GSU" "origin" { origin = "gsu" }
+      source "ETH/GSU" "origin" { origin = "gsu1" }
+      source "ETH/GSU" "origin" { origin = "gsu2" }
+      min_sources = 1
+    }
+  price_model "USDT/GSU" "median" {
+      source "USDT/GSU" "origin" { origin = "gsu" }
+      source "USDT/GSU" "origin" { origin = "gsu1" }
+      source "USDT/GSU" "origin" { origin = "gsu2" }
+      min_sources = 1
+    }
+  price_model "BTC/USD" "median" {
+    source "BTC/USD" "origin" { origin = "gsu" }
+    source "BTC/USD" "origin" { origin = "gsu1" }
+    source "BTC/USD" "origin" { origin = "gsu2" }
+    min_sources = 1
   }
 }
 ```
